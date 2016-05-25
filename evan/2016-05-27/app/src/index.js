@@ -1,64 +1,44 @@
-class Renderer {
-    private renderer: THREE.WebGLRenderer;
-    private scene: THREE.Scene;
-    private camera: THREE.PerspectiveCamera;
-    private frame: number = 0;
-
-    constructor(public width: number, public height: number) {
-        // create renderer
+var Renderer = (function () {
+    function Renderer(width, height) {
+        this.width = width;
+        this.height = height;
+        this.frame = 0;
         this.renderer = new THREE.WebGLRenderer({ alpha: true });
-
-        // set dimensions
         this.renderer.setSize(width, height);
         this.renderer.setClearColor(0x000000, 1);
-
-        // bind renderer to DOM
         document.body.appendChild(this.renderer.domElement);
-
-        // create scene
         this.scene = new THREE.Scene();
-
-        // create camera
         this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
-
-        // position camera
         this.camera.position.set(0, 0, 20);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-        // add some listeners
         window.addEventListener("resize", this.onWindowResize, false);
         document.addEventListener("mousemove", this.onMouseMove, false);
-
-        let geometry: THREE.BoxGeometry = new THREE.BoxGeometry(1, 1, 1);
-        let material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        let cube: THREE.Mesh = new THREE.Mesh(geometry, material);
+        var geometry = new THREE.BoxGeometry(1, 1, 1);
+        var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        var cube = new THREE.Mesh(geometry, material);
         this.scene.add(cube);
     }
-
-    onWindowResize() {
+    Renderer.prototype.onWindowResize = function () {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    onMouseMove(event) {
+    };
+    Renderer.prototype.onMouseMove = function (event) {
         event.preventDefault();
-    }
-
-
-    update() {
-        let time: number = Date.now() * 0.001;
+    };
+    Renderer.prototype.update = function () {
+        var time = Date.now() * 0.001;
         this.frame += 0.01;
-    }
-
-    render() {
+    };
+    Renderer.prototype.render = function () {
+        var _this = this;
         this.update();
         this.renderer.render(this.scene, this.camera);
-        requestAnimationFrame(() => this.render());
-    }
-
-}
-
-window.onload = () => {
+        requestAnimationFrame(function () { return _this.render(); });
+    };
+    return Renderer;
+}());
+window.onload = function () {
     new Renderer(window.innerWidth, window.innerHeight).render();
 };
+//# sourceMappingURL=index.js.map
