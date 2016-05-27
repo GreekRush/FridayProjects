@@ -7,6 +7,7 @@ class Renderer {
     public windowHalfY: number;
 
     public cube: THREE.Mesh;
+    public plane: THREE.Mesh;
 
     constructor(public width: number, public height: number) {
         // create renderer
@@ -27,23 +28,38 @@ class Renderer {
         this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
 
         // position camera
-        this.camera.position.set(0, 1, 5);
+        this.camera.position.set(0, 3, 5);
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-        // add a light
+        /*
+         * add lighting
+         */
+
+        // point light
         let pLight = new THREE.DirectionalLight(0xffffff, .7);
-        pLight.position.set(10, 10, 0);
+        pLight.position.set(7, 10, -1);
         this.scene.add(pLight);
+
+        // ambient light
         let aLight = new THREE.AmbientLight(0xffffff, 0.1);
         this.scene.add(aLight);
 
-        // add some listeners
-        window.addEventListener("resize", this.onWindowResize, false);
-        document.addEventListener("mousemove", this.onMouseMove, false);
 
-        // add an object
-        let geometry: THREE.BoxGeometry = new THREE.BoxGeometry(2, 2, 2);
-        let material: THREE.MeshPhongMaterial = new THREE.MeshPhongMaterial(
+        /*
+         * add objects
+         */
+
+        // add plane
+        let planeGeometry = new THREE.PlaneGeometry(10, 8);
+        let planeMaterial = new THREE.MeshPhongMaterial({ color: 0x444444, specular: 0x888888, side: THREE.DoubleSide });
+        this.plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        this.plane.rotation.x = Math.PI / 2;
+        this.scene.add(this.plane);
+
+        // add cube
+        let geometry: THREE.Geometry = new THREE.BoxGeometry(2, 2, 2);
+        // let material: THREE.Material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        let material: THREE.Material = new THREE.MeshPhongMaterial(
             {
                 color: 0x00ff00,
                 specular: 0xffffff,
@@ -51,7 +67,13 @@ class Renderer {
             }
         );
         this.cube = new THREE.Mesh(geometry, material);
+        this.cube.translateY(1);
         this.scene.add(this.cube);
+
+
+        // add some listeners
+        window.addEventListener("resize", this.onWindowResize, false);
+        document.addEventListener("mousemove", this.onMouseMove, false);
     }
 
     private onWindowResize = () => {
@@ -75,7 +97,7 @@ class Renderer {
     update() {
         let time: number = Date.now() * 0.001;
         this.frame += 0.01;
-        this.cube.rotateY(0.01);
+        // this.cube.rotateY(0.01);
     }
 
     render() {
