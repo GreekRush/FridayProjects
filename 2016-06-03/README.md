@@ -8,6 +8,8 @@ Apart form the interest this thesis may hold for those who are engaged in futuri
 
 The structure of the paper is as follows. First, we formulate an assumption that we need to import from the philosophy of mind in order to get the argument started. Second, we consider some empirical reasons for thinking that running vastly many simulations of human minds would be within the capability of a future civilization that has developed many of those technologies that can already be shown to be compatible with known physical laws and engineering constraints. This part is not philosophically necessary but it provides an incentive for paying attention to the rest. Then follows the core of the argument, which makes use of some simple probability theory, and a section providing support for a weak indifference principle that the argument employs. Lastly, we discuss some interpretations of the disjunction, mentioned in the abstract, that forms the conclusion of the simulation argument.
 
+- Is life a video game? | Elon Musk | Code Conference 2016 (3:43)  
+https://www.youtube.com/watch?v=2KK_kzrJPS8
 - 2016 Isaac Asimov Memorial Debate: Is the Universe a Simulation? (2:00:58)  
 https://www.youtube.com/watch?v=wgSZA3NPpBs
 - Our World is a Simulation? - The Know (7:47) (*summarizes video above ^*)  
