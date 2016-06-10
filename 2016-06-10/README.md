@@ -10,15 +10,20 @@ Generative Art is using programming to generate artwork that is algorithmically 
 
 ### Install Processing App
 
+[Processing](https://processing.org/)
+
 ### Install HYPE Library
 
+[github: Hype Framework](https://github.com/hype/HYPE_Processing)
+
 ### Start Programming
+
+[SkillShare Generative Art Tutorial](https://www.skillshare.com/classes/design/Programming-Graphics-I-Introduction-to-Generative-Art/782118657)
 
 ## SOURCES ##
 
 [GenerativeArt.com](http://www.generativeart.com/)
-[SkillShare Generative Art Tutorial](https://www.skillshare.com/classes/design/Programming-Graphics-I-Introduction-to-Generative-Art/782118657)
-[Processing](https://processing.org/)
+
 [www.hypeframework.org](http://www.hypeframework.org/)
-[github: Hype Framework](https://github.com/hype/HYPE_Processing)
+
 [Silk - Interactive Generative Art](http://weavesilk.com/)
