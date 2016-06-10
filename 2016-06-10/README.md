@@ -1,6 +1,6 @@
 # TECH TALK FRIDAY - GENERATIVE ART
 
-A project created by [Cody Cross](https://github.com/codycross/) / [twitter.com/codycrosss](https://twitter.com/codycrosss/).
+A project created by [Cody Cross](https://github.com/codycross/) / [@codycrosss](https://twitter.com/codycrosss/).
 
 ## ABOUT GENERATIVE ART ##
 
