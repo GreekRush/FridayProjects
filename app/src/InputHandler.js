@@ -1,7 +1,7 @@
 "use strict";
-const Globals = require("./Globals");
-const MOUSE_SENSITIVITY = 10;
-const Key = {
+var Globals = require("./Globals");
+var MOUSE_SENSITIVITY = 10;
+var Key = {
     W: 87,
     S: 83,
     A: 65,
@@ -12,8 +12,9 @@ const Key = {
     RIGHT: 39,
     SPACE: 32
 };
-class InputHandler {
-    constructor(camera, player) {
+var InputHandler = (function () {
+    function InputHandler(camera, player) {
+        var _this = this;
         this.camera = camera;
         this.player = player;
         this.camXAngle = 0.0;
@@ -32,43 +33,43 @@ class InputHandler {
         this.moveUp = false;
         this.moveDown = false;
         this.pointerLock = false;
-        this.onKeyDown = (event) => {
+        this.onKeyDown = function (event) {
             switch (event.keyCode) {
                 case Key.UP:
                 case Key.W:
-                    this.moveForward = true;
+                    _this.moveForward = true;
                     break;
                 case Key.DOWN:
                 case Key.S:
-                    this.moveBackward = true;
+                    _this.moveBackward = true;
                     break;
                 case Key.LEFT:
                 case Key.A:
-                    this.moveLeft = true;
+                    _this.moveLeft = true;
                     break;
                 case Key.RIGHT:
                 case Key.D:
-                    this.moveRight = true;
+                    _this.moveRight = true;
                     break;
             }
         };
-        this.onKeyUp = (event) => {
+        this.onKeyUp = function (event) {
             switch (event.keyCode) {
                 case Key.UP:
                 case Key.W:
-                    this.moveForward = false;
+                    _this.moveForward = false;
                     break;
                 case Key.DOWN:
                 case Key.S:
-                    this.moveBackward = false;
+                    _this.moveBackward = false;
                     break;
                 case Key.LEFT:
                 case Key.A:
-                    this.moveLeft = false;
+                    _this.moveLeft = false;
                     break;
                 case Key.RIGHT:
                 case Key.D:
-                    this.moveRight = false;
+                    _this.moveRight = false;
                     break;
             }
         };
@@ -76,29 +77,29 @@ class InputHandler {
         document.addEventListener("keydown", this.onKeyDown, false);
         document.addEventListener("keyup", this.onKeyUp, false);
     }
-    calcPlayerMovement() {
-        let xMovement = 0.0, yMovement = 0.0, zMovement = 0.0;
+    InputHandler.prototype.calcPlayerMovement = function () {
+        var xMovement = 0.0, yMovement = 0.0, zMovement = 0.0;
         if (this.moveForward) {
-            let pitch = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
+            var pitch = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
             xMovement += this.speed * Math.sin(this.camYAngle * Globals.DEG_TO_RADS) * pitch;
             yMovement += this.speed * -Math.sin(this.camYAngle * Globals.DEG_TO_RADS);
-            let yaw = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
+            var yaw = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
             zMovement = this.speed * -Math.cos(this.camYAngle * Globals.DEG_TO_RADS) * yaw;
         }
         if (this.moveBackward) {
-            let pitch = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
+            var pitch = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
             xMovement += this.speed * -Math.sin(this.camYAngle * Globals.DEG_TO_RADS) * pitch;
             yMovement += this.speed * Math.sin(this.camYAngle * Globals.DEG_TO_RADS);
-            let yaw = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
+            var yaw = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
             zMovement = this.speed * Math.cos(this.camYAngle * Globals.DEG_TO_RADS) * yaw;
         }
         if (this.moveLeft) {
-            let camYAngleRad = this.camYAngle * Globals.DEG_TO_RADS;
+            var camYAngleRad = this.camYAngle * Globals.DEG_TO_RADS;
             xMovement += -this.speed * Math.cos(camYAngleRad);
             zMovement += -this.speed * Math.sin(camYAngleRad);
         }
         if (this.moveRight) {
-            let camYAngleRad = this.camYAngle * Globals.DEG_TO_RADS;
+            var camYAngleRad = this.camYAngle * Globals.DEG_TO_RADS;
             xMovement += this.speed * Math.cos(camYAngleRad);
             zMovement += this.speed * Math.sin(camYAngleRad);
         }
@@ -118,10 +119,11 @@ class InputHandler {
         this.camYPos += yMovement;
         this.camZPos += zMovement;
         this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
-    }
-    update() {
+    };
+    InputHandler.prototype.update = function () {
         this.calcPlayerMovement();
-    }
-}
+    };
+    return InputHandler;
+}());
 exports.InputHandler = InputHandler;
 //# sourceMappingURL=InputHandler.js.map
