@@ -2,13 +2,14 @@
 {
     "files.exclude": {
         "**/.git": true,
-        "**/.DS_Store": true,
-        "**/*.map": true
+        "**/.DS_Store": true
     },
     "editor.insertSpaces": true,
     "search.exclude": {
         "**/node_modules": true,
         "**/bower_components": true,
-        "**/src/**/*.js": true
+        "**/src/**/*.js": true,
+        "**/dist": true,
+        "**/lib": true
     }
 }

@@ -42,10 +42,13 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/*!*************************!*\
+  !*** ./app/src/main.ts ***!
+  \*************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var Renderer_1 = __webpack_require__(1);
+	var Renderer_1 = __webpack_require__(/*! ./Renderer */ 1);
 	window.onload = function () {
 	    new Renderer_1.Renderer(window.innerWidth, window.innerHeight).render();
 	};
@@ -53,10 +56,13 @@
 
 /***/ },
 /* 1 */
+/*!*****************************!*\
+  !*** ./app/src/Renderer.ts ***!
+  \*****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var InputHandler_1 = __webpack_require__(2);
+	var InputHandler_1 = __webpack_require__(/*! ./InputHandler */ 2);
 	var Renderer = (function () {
 	    function Renderer(width, height) {
 	        var _this = this;
@@ -144,10 +150,13 @@
 
 /***/ },
 /* 2 */
+/*!*********************************!*\
+  !*** ./app/src/InputHandler.ts ***!
+  \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var Globals = __webpack_require__(3);
+	var Globals = __webpack_require__(/*! ./Globals */ 3);
 	var MOUSE_SENSITIVITY = 10;
 	var Key = {
 	    W: 87,
@@ -279,6 +288,9 @@
 
 /***/ },
 /* 3 */
+/*!****************************!*\
+  !*** ./app/src/Globals.ts ***!
+  \****************************/
 /***/ function(module, exports) {
 
 	"use strict";
