@@ -267,6 +267,7 @@
 	        this.camYPos += yMovement;
 	        this.camZPos += zMovement;
 	        this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
+	        this.camera.updateMatrix();
 	    };
 	    InputHandler.prototype.update = function () {
 	        this.calcPlayerMovement();
@@ -286,4 +287,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=threets.js.map

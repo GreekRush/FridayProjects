@@ -144,6 +144,7 @@ export class InputHandler {
         this.camZPos += zMovement;
 
         this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
+        this.camera.updateMatrix();
     }
 
     update() {
