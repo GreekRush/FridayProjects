@@ -1,6 +1,6 @@
 var Agenda = require('agenda');
 
-var mongoConnectionString = require('../config');
+var mongoConnectionString = require('./config');
 var agenda = new Agenda({db: {address: mongoConnectionString}});
 
 

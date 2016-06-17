@@ -6,17 +6,8 @@ var Agendash = require('agendash');
 
 var mongoConnectionString = require('./config');
 
-var agenda = new Agenda({db: {address: mongoConnectionString},processEvery: '30 seconds'});
-var worker = require('./app/agenda.js');
-//
-//
-
-//
-//
-// agenda.on('complete', function(job) {
-// 	console.log("Job %s finished", job.attrs.name);
-// });
-
+var agenda = new Agenda({db: {address: mongoConnectionString},processEvery: '5 seconds'});
+var worker = require('./agenda.js');
 
 
 
