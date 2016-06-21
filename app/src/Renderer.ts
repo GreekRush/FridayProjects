@@ -108,8 +108,6 @@ export class Renderer {
 
         // add some listeners
         window.addEventListener("resize", this.onWindowResize, false);
-        // document.addEventListener("keydown", this.onKeyDown, false);
-        // document.addEventListener("keyup", this.onKeyUp, false);
 
 
         // initialize timer
@@ -125,55 +123,6 @@ export class Renderer {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
-    // TODO: relegate mouse events to separate class InputHandler
-
-
-    // calcCameraMovement() {
-    //     let xMovement: number = 0.0, yMovement: number = 0.0, zMovement: number = 0.0;
-
-    //     if (this.moveForward) {
-    //         let pitch = Math.cos(this.camXAngle * DEG_TO_RADS);
-    //         xMovement += this.speed * Math.sin(this.camYAngle * DEG_TO_RADS) * pitch;
-    //         yMovement += this.speed * -Math.sin(this.camYAngle * DEG_TO_RADS);
-    //         let yaw = Math.cos(this.camXAngle * DEG_TO_RADS);
-    //         zMovement = this.speed * -Math.cos(this.camYAngle * DEG_TO_RADS) * yaw;
-    //     }
-    //     if (this.moveBackward) {
-    //         let pitch = Math.cos(this.camXAngle * DEG_TO_RADS);
-    //         xMovement += this.speed * -Math.sin(this.camYAngle * DEG_TO_RADS) * pitch;
-    //         yMovement += this.speed * Math.sin(this.camYAngle * DEG_TO_RADS);
-    //         let yaw = Math.cos(this.camXAngle * DEG_TO_RADS);
-    //         zMovement = this.speed * Math.cos(this.camYAngle * DEG_TO_RADS) * yaw;
-    //     }
-    //     if (this.moveLeft) {
-    //         let camYAngleRad = this.camYAngle * DEG_TO_RADS;
-    //         xMovement += -this.speed * Math.cos(camYAngleRad);
-    //         zMovement += -this.speed * Math.sin(camYAngleRad);
-    //     }
-    //     if (this.moveRight) {
-    //         let camYAngleRad = this.camYAngle * DEG_TO_RADS;
-    //         xMovement += this.speed * Math.cos(camYAngleRad);
-    //         zMovement += this.speed * Math.sin(camYAngleRad);
-    //     }
-
-    //     // limit movement speed (so diagonal doesn't make you go faster)
-    //     if (xMovement > this.speed) xMovement = this.speed;
-    //     if (xMovement < -this.speed) xMovement = -this.speed;
-    //     if (yMovement > this.speed) yMovement = this.speed;
-    //     if (yMovement < -this.speed) yMovement = -this.speed;
-    //     if (zMovement > this.speed) zMovement = this.speed;
-    //     if (zMovement < -this.speed) zMovement = -this.speed;
-
-
-    //     // update camera position
-    //     this.camXPos += xMovement;
-    //     this.camYPos += yMovement;
-    //     this.camZPos += zMovement;
-
-    //     this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
-    // }
-
-
     update() {
         // this.timer();
         this.cube.rotateY(0.01);
@@ -183,7 +132,7 @@ export class Renderer {
     timer() {
         let dt: number = Date.now() - this.startTime;
         if (dt >= 1000) {
-            // console.log("FPS: " + this.frames);
+            console.log("FPS: " + this.frames);
             this.frames = 0;
             this.startTime = Date.now();
         }

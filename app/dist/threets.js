@@ -132,6 +132,7 @@
 	    Renderer.prototype.timer = function () {
 	        var dt = Date.now() - this.startTime;
 	        if (dt >= 1000) {
+	            console.log("FPS: " + this.frames);
 	            this.frames = 0;
 	            this.startTime = Date.now();
 	        }
@@ -230,10 +231,14 @@
 	                    break;
 	            }
 	        };
-	        player = player || camera;
+	        this.player = player || camera;
 	        document.addEventListener("keydown", this.onKeyDown, false);
 	        document.addEventListener("keyup", this.onKeyUp, false);
 	    }
+	    InputHandler.prototype.destroy = function () {
+	        document.removeEventListener("keydown", this.onKeyDown, false);
+	        document.removeEventListener("keyup", this.onKeyUp, false);
+	    };
 	    InputHandler.prototype.calcPlayerMovement = function () {
 	        var xMovement = 0.0, yMovement = 0.0, zMovement = 0.0;
 	        if (this.moveForward) {
@@ -295,6 +300,7 @@
 
 	"use strict";
 	exports.DEG_TO_RADS = 3.141592654 / 180.0;
+	exports.DEBUG_MODE = false;
 
 
 /***/ }

@@ -37,11 +37,16 @@ export class InputHandler {
 
     constructor(public camera: THREE.Camera, public player?: THREE.Object3D) {
         // if no player is defined, assume the camera is the player (i.e. first person)
-        player = player || camera;
+        this.player = player || camera;
 
-        // attach listeners
+        // add key listeners
         document.addEventListener("keydown", this.onKeyDown, false);
         document.addEventListener("keyup", this.onKeyUp, false);
+    }
+
+    destroy() {
+        document.removeEventListener("keydown", this.onKeyDown, false);
+        document.removeEventListener("keyup", this.onKeyUp, false);
     }
 
     private onKeyDown = (event) => {
