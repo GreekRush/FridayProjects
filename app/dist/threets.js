@@ -63,6 +63,7 @@
 
 	"use strict";
 	var InputHandler_1 = __webpack_require__(/*! ./InputHandler */ 2);
+	var MouseHandler_1 = __webpack_require__(/*! ./MouseHandler */ 4);
 	var Renderer = (function () {
 	    function Renderer(width, height) {
 	        var _this = this;
@@ -122,6 +123,8 @@
 	        this.cube.translateY(1);
 	        this.scene.add(this.cube);
 	        this.inputHandler = new InputHandler_1.InputHandler(this.camera);
+	        this.controls = new MouseHandler_1.MouseHandler(this.camera);
+	        this.scene.add(this.controls.getObject());
 	        window.addEventListener("resize", this.onWindowResize, false);
 	        this.startTime = Date.now();
 	    }
@@ -158,7 +161,6 @@
 
 	"use strict";
 	var Globals = __webpack_require__(/*! ./Globals */ 3);
-	var MOUSE_SENSITIVITY = 10;
 	var Key = {
 	    W: 87,
 	    S: 83,
@@ -300,7 +302,85 @@
 
 	"use strict";
 	exports.DEG_TO_RADS = 3.141592654 / 180.0;
+	exports.PI_2 = Math.PI / 2;
 	exports.DEBUG_MODE = false;
+
+
+/***/ },
+/* 4 */
+/*!*********************************!*\
+  !*** ./app/src/MouseHandler.ts ***!
+  \*********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var Globals = __webpack_require__(/*! ./Globals */ 3);
+	var MOUSE_SENSITIVITY = 0.002;
+	var MouseHandler = (function () {
+	    function MouseHandler(camera) {
+	        var _this = this;
+	        this.camera = camera;
+	        this.onMouseMove = function (event) {
+	            event.preventDefault();
+	            event.stopPropagation();
+	            if (_this._pointerLock) {
+	                var dx = event.movementX || 0;
+	                var dy = event.movementY || 0;
+	                _this._yaw.rotation.y -= dx * MOUSE_SENSITIVITY;
+	                _this._pitch.rotation.x -= dy * MOUSE_SENSITIVITY;
+	                _this._pitch.rotation.x = Math.max(-Globals.PI_2, Math.min(Globals.PI_2, _this._pitch.rotation.x));
+	            }
+	        };
+	        this.pointerLock = false;
+	        this._pitch = new THREE.Object3D();
+	        this._pitch.add(this.camera);
+	        this._yaw = new THREE.Object3D();
+	        this._yaw.position.y = 10;
+	        this._yaw.add(this._pitch);
+	        document.body.requestPointerLock();
+	        this.enablePointerLock();
+	    }
+	    MouseHandler.prototype.destroy = function () {
+	        this.disablePointerLock();
+	    };
+	    Object.defineProperty(MouseHandler.prototype, "pointerLock", {
+	        get: function () { return this._pointerLock; },
+	        set: function (pointerLock) {
+	            this._pointerLock = pointerLock;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    MouseHandler.prototype.enablePointerLock = function () {
+	        document.addEventListener("mousemove", this.onMouseMove, false);
+	        this._pointerLock = true;
+	    };
+	    MouseHandler.prototype.disablePointerLock = function () {
+	        document.removeEventListener("mousemove", this.onMouseMove, false);
+	        this._pointerLock = false;
+	    };
+	    MouseHandler.prototype.calcCameraMovement = function () {
+	    };
+	    MouseHandler.prototype.getObject = function () {
+	        return this._yaw;
+	    };
+	    MouseHandler.prototype.getDirection = function () {
+	        var dir = new THREE.Vector3(0, 0, -1);
+	        var rot = new THREE.Euler(0, 0, 0, "YXZ");
+	        return function direction(v) {
+	            rot.set(this._pitch.rotation.x, this._yaw.rotation.y, 0);
+	            v.copy(dir).applyEuler(rot);
+	            return v;
+	        };
+	    };
+	    MouseHandler.prototype.update = function () {
+	        if (this._pointerLock) {
+	            this.calcCameraMovement();
+	        }
+	    };
+	    return MouseHandler;
+	}());
+	exports.MouseHandler = MouseHandler;
 
 
 /***/ }

@@ -1,4 +1,5 @@
-import {InputHandler} from "./InputHandler";
+import { InputHandler } from "./InputHandler";
+import { MouseHandler } from "./MouseHandler";
 
 export class Renderer {
 
@@ -10,6 +11,7 @@ export class Renderer {
     private cMatrix: THREE.Matrix4 = new THREE.Matrix4();
 
     private inputHandler: InputHandler;
+    private controls: MouseHandler;
 
     // angle of rotation for the camera
     private camXAngle: number = 0.0; // relative to x-axis (i.e. vertical angle)
@@ -105,6 +107,10 @@ export class Renderer {
 
         // add input handler
         this.inputHandler = new InputHandler(this.camera);
+
+        // add mouse controls
+        this.controls = new MouseHandler(this.camera);
+        this.scene.add(this.controls.getObject());
 
         // add some listeners
         window.addEventListener("resize", this.onWindowResize, false);

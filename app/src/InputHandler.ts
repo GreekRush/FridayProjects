@@ -1,7 +1,5 @@
 import * as Globals from "./Globals";
 
-const MOUSE_SENSITIVITY: number = 10;
-
 const Key = {
     W: 87,
     S: 83,
@@ -49,7 +47,7 @@ export class InputHandler {
         document.removeEventListener("keyup", this.onKeyUp, false);
     }
 
-    private onKeyDown = (event) => {
+    private onKeyDown = (event: KeyboardEvent) => {
 
         switch (event.keyCode) {
             case Key.UP:
@@ -85,7 +83,7 @@ export class InputHandler {
         // if (camYAngle > 180.0) camYAngle += 360.0;
     };
 
-    private onKeyUp = (event) => {
+    private onKeyUp = (event: KeyboardEvent) => {
         switch (event.keyCode) {
             case Key.UP:
             case Key.W:
