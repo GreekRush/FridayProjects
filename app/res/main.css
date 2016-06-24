@@ -6,3 +6,27 @@ canvas {
     height: 100%;
     display: block;
 }
+
+.center-flex {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: stretch;
+}
+#pointerLockButton {
+    display: block;
+    border: 1px solid #ffffff;
+    border-radius: 2px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+#pointerLockButton:hover {
+    background-color: #ddd;
+    color: #000;
+}

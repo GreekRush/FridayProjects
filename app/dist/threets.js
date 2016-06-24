@@ -320,6 +320,16 @@
 	    function MouseHandler(camera) {
 	        var _this = this;
 	        this.camera = camera;
+	        this.pointerLockChange = function (event) {
+	            if (document.pointerLockElement === document.body || document["mozPointerLockElement"] === document.body || document["webkitPointerLockElement"] === document.body) {
+	                _this.enablePointerLock();
+	                document.querySelector["#center-flex"].style.display = "none";
+	            }
+	            else {
+	                _this.disablePointerLock();
+	                document.querySelector["#center-flex"].style.display = "flex";
+	            }
+	        };
 	        this.onMouseMove = function (event) {
 	            event.preventDefault();
 	            event.stopPropagation();
@@ -337,8 +347,14 @@
 	        this._yaw = new THREE.Object3D();
 	        this._yaw.position.y = 10;
 	        this._yaw.add(this._pitch);
-	        document.body.requestPointerLock();
-	        this.enablePointerLock();
+	        this._pointerLockButton = document.querySelector("#pointerLockButton");
+	        var havePointerLock = "pointerLockElement" in document ||
+	            "mozPointerLockElement" in document ||
+	            "webkitPointerLockElement" in document;
+	        if (havePointerLock) {
+	            var element_1 = document.body;
+	            this._pointerLockButton.addEventListener("click", function (event) { return element_1.requestPointerLock(); });
+	        }
 	    }
 	    MouseHandler.prototype.destroy = function () {
 	        this.disablePointerLock();

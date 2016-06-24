@@ -8,6 +8,8 @@ export class MouseHandler {
     private _pitch: THREE.Object3D;
     private _yaw: THREE.Object3D;
 
+    private _pointerLockButton: Element;
+
     constructor(public camera: THREE.Camera) {
         this.pointerLock = false;
 
@@ -18,8 +20,30 @@ export class MouseHandler {
         this._yaw.position.y = 10;
         this._yaw.add(this._pitch);
 
-        document.body.requestPointerLock();
-        this.enablePointerLock();
+        this._pointerLockButton = document.querySelector("#pointerLockButton");
+
+        // make sure browser supports pointerlock API
+        let havePointerLock = "pointerLockElement" in document ||
+            "mozPointerLockElement" in document ||
+            "webkitPointerLockElement" in document;
+
+        if (havePointerLock) {
+            let element = document.body;
+            this._pointerLockButton.addEventListener("click", (event) => element.requestPointerLock());
+
+        }
+        // document.body.requestPointerLock();
+        // this.enablePointerLock();
+    }
+
+    pointerLockChange = (event) => {
+        if (document.pointerLockElement === document.body || document["mozPointerLockElement"] === document.body || document["webkitPointerLockElement"] === document.body) {
+            this.enablePointerLock();
+            document.querySelector["#center-flex"].style.display = "none";
+        } else {
+            this.disablePointerLock();
+            document.querySelector["#center-flex"].style.display = "flex";
+        }
     }
 
     destroy() {
@@ -37,7 +61,7 @@ export class MouseHandler {
             this._yaw.rotation.y -= dx * MOUSE_SENSITIVITY;
             this._pitch.rotation.x -= dy * MOUSE_SENSITIVITY;
 
-            this._pitch.rotation.x = Math.max( -Globals.PI_2, Math.min( Globals.PI_2, this._pitch.rotation.x));
+            this._pitch.rotation.x = Math.max(-Globals.PI_2, Math.min(Globals.PI_2, this._pitch.rotation.x));
         }
     };
 
