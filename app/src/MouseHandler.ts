@@ -8,7 +8,7 @@ export class MouseHandler {
     private _pitch: THREE.Object3D;
     private _yaw: THREE.Object3D;
 
-    private _pointerLockButton: Element;
+    private _pointerLockButton: HTMLElement;
 
     constructor(public camera: THREE.Camera) {
         this.pointerLock = false;
@@ -17,10 +17,10 @@ export class MouseHandler {
         this._pitch.add(this.camera);
 
         this._yaw = new THREE.Object3D();
-        this._yaw.position.y = 10;
+        this._yaw.position.y = 2;
         this._yaw.add(this._pitch);
 
-        this._pointerLockButton = document.querySelector("#pointerLockButton");
+        this._pointerLockButton = document.getElementById("pointerLockButton");
 
         // make sure browser supports pointerlock API
         let havePointerLock = "pointerLockElement" in document ||
@@ -29,7 +29,12 @@ export class MouseHandler {
 
         if (havePointerLock) {
             let element = document.body;
-            this._pointerLockButton.addEventListener("click", (event) => element.requestPointerLock());
+            document.addEventListener('pointerlockchange', this.pointerLockChange, false);
+            this._pointerLockButton.addEventListener("click", (event) => {
+                this._pointerLockButton.style.display = "none";
+        document.body.requestPointerLock();
+                // this.pointerLockChange(event);
+            });
 
         }
         // document.body.requestPointerLock();
@@ -37,14 +42,16 @@ export class MouseHandler {
     }
 
     pointerLockChange = (event) => {
+        // console.log(document.pointerLockElement);
         if (document.pointerLockElement === document.body || document["mozPointerLockElement"] === document.body || document["webkitPointerLockElement"] === document.body) {
+
             this.enablePointerLock();
-            document.querySelector["#center-flex"].style.display = "none";
+            document.getElementById("blocker").style.display = "none";
         } else {
             this.disablePointerLock();
-            document.querySelector["#center-flex"].style.display = "flex";
+            document.getElementById("blocker").style.display = "flex";
         }
-    }
+    };
 
     destroy() {
         this.disablePointerLock();
@@ -72,6 +79,9 @@ export class MouseHandler {
     }
 
     enablePointerLock() {
+        let element = document.body;
+
+        element.requestPointerLock();
         document.addEventListener("mousemove", this.onMouseMove, false);
         this._pointerLock = true;
     }
@@ -102,7 +112,8 @@ export class MouseHandler {
 
     update() {
         if (this._pointerLock) {
-            this.calcCameraMovement();
+            // this.calcCameraMovement();
+
         }
     }
 }

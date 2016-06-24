@@ -62,8 +62,8 @@ export class Renderer {
         this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100);
 
         // position camera
-        this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
-        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+        // this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
+        // this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         /*
          * add lighting
@@ -106,11 +106,11 @@ export class Renderer {
         this.scene.add(this.cube);
 
         // add input handler
-        this.inputHandler = new InputHandler(this.camera);
 
         // add mouse controls
         this.controls = new MouseHandler(this.camera);
         this.scene.add(this.controls.getObject());
+        this.inputHandler = new InputHandler(<THREE.Camera>this.controls.getObject());
 
         // add some listeners
         window.addEventListener("resize", this.onWindowResize, false);

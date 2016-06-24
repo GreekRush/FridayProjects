@@ -1,4 +1,5 @@
 import * as Globals from "./Globals";
+import { MouseHandler } from "./MouseHandler";
 
 const Key = {
     W: 87,
@@ -24,7 +25,7 @@ export class InputHandler {
     private camXSpeed: number = 0.0; private camYSpeed: number = 0.0; private camZSpeed: number = 0.0;
 
     // adjust to change movement speed
-    private speed: number = 0.2;
+    private speed: number = 0.05;
 
     // directional movement
     private moveForward: boolean = false; private moveBackward: boolean = false;
@@ -107,27 +108,31 @@ export class InputHandler {
     calcPlayerMovement() {
         let xMovement: number = 0.0, yMovement: number = 0.0, zMovement: number = 0.0;
 
+        // let dir = this.camera.getWorldDirection();
+        // this.camXAngle = dir.x;
+        // this.camYAngle = dir.z;
+
         if (this.moveForward) {
-            let pitch = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
-            xMovement += this.speed * Math.sin(this.camYAngle * Globals.DEG_TO_RADS) * pitch;
-            yMovement += this.speed * -Math.sin(this.camYAngle * Globals.DEG_TO_RADS);
-            let yaw = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
-            zMovement = this.speed * -Math.cos(this.camYAngle * Globals.DEG_TO_RADS) * yaw;
+            let pitch = Math.cos(this.camXAngle/* * Globals.DEG_TO_RADS*/);
+            xMovement += this.speed * Math.sin(this.camYAngle/* * Globals.DEG_TO_RADS*/) * pitch;
+            yMovement += this.speed * -Math.sin(this.camYAngle/* * Globals.DEG_TO_RADS*/);
+            let yaw = Math.cos(this.camXAngle/* * Globals.DEG_TO_RADS*/);
+            zMovement = this.speed * -Math.cos(this.camYAngle/* * Globals.DEG_TO_RADS*/) * yaw;
         }
         if (this.moveBackward) {
-            let pitch = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
-            xMovement += this.speed * -Math.sin(this.camYAngle * Globals.DEG_TO_RADS) * pitch;
-            yMovement += this.speed * Math.sin(this.camYAngle * Globals.DEG_TO_RADS);
-            let yaw = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
-            zMovement = this.speed * Math.cos(this.camYAngle * Globals.DEG_TO_RADS) * yaw;
+            let pitch = Math.cos(this.camXAngle/* * Globals.DEG_TO_RADS*/);
+            xMovement += this.speed * -Math.sin(this.camYAngle/* * Globals.DEG_TO_RADS*/) * pitch;
+            yMovement += this.speed * Math.sin(this.camYAngle/* * Globals.DEG_TO_RADS*/);
+            let yaw = Math.cos(this.camXAngle/* * Globals.DEG_TO_RADS*/);
+            zMovement = this.speed * Math.cos(this.camYAngle/* * Globals.DEG_TO_RADS*/) * yaw;
         }
         if (this.moveLeft) {
-            let camYAngleRad = this.camYAngle * Globals.DEG_TO_RADS;
+            let camYAngleRad = this.camYAngle/* * Globals.DEG_TO_RADS*/;
             xMovement += -this.speed * Math.cos(camYAngleRad);
             zMovement += -this.speed * Math.sin(camYAngleRad);
         }
         if (this.moveRight) {
-            let camYAngleRad = this.camYAngle * Globals.DEG_TO_RADS;
+            let camYAngleRad = this.camYAngle/* * Globals.DEG_TO_RADS*/;
             xMovement += this.speed * Math.cos(camYAngleRad);
             zMovement += this.speed * Math.sin(camYAngleRad);
         }
@@ -146,7 +151,10 @@ export class InputHandler {
         this.camYPos += yMovement;
         this.camZPos += zMovement;
 
-        this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
+        // this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
+        this.camera.translateX(xMovement);
+        this.camera.translateY(yMovement);
+        this.camera.translateZ(zMovement);
         this.camera.updateMatrix();
     }
 

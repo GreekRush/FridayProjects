@@ -101,8 +101,6 @@
 	        document.body.appendChild(this.renderer.domElement);
 	        this.scene = new THREE.Scene();
 	        this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 100);
-	        this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
-	        this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 	        var pLight = new THREE.PointLight(0xffffff, .7);
 	        pLight.position.set(3, 10, 3);
 	        this.scene.add(pLight);
@@ -122,9 +120,9 @@
 	        this.cube = new THREE.Mesh(geometry, material);
 	        this.cube.translateY(1);
 	        this.scene.add(this.cube);
-	        this.inputHandler = new InputHandler_1.InputHandler(this.camera);
 	        this.controls = new MouseHandler_1.MouseHandler(this.camera);
 	        this.scene.add(this.controls.getObject());
+	        this.inputHandler = new InputHandler_1.InputHandler(this.controls.getObject());
 	        window.addEventListener("resize", this.onWindowResize, false);
 	        this.startTime = Date.now();
 	    }
@@ -157,10 +155,9 @@
 /*!*********************************!*\
   !*** ./app/src/InputHandler.ts ***!
   \*********************************/
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	"use strict";
-	var Globals = __webpack_require__(/*! ./Globals */ 3);
 	var Key = {
 	    W: 87,
 	    S: 83,
@@ -185,7 +182,7 @@
 	        this.camXSpeed = 0.0;
 	        this.camYSpeed = 0.0;
 	        this.camZSpeed = 0.0;
-	        this.speed = 0.2;
+	        this.speed = 0.05;
 	        this.moveForward = false;
 	        this.moveBackward = false;
 	        this.moveRight = false;
@@ -244,26 +241,26 @@
 	    InputHandler.prototype.calcPlayerMovement = function () {
 	        var xMovement = 0.0, yMovement = 0.0, zMovement = 0.0;
 	        if (this.moveForward) {
-	            var pitch = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
-	            xMovement += this.speed * Math.sin(this.camYAngle * Globals.DEG_TO_RADS) * pitch;
-	            yMovement += this.speed * -Math.sin(this.camYAngle * Globals.DEG_TO_RADS);
-	            var yaw = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
-	            zMovement = this.speed * -Math.cos(this.camYAngle * Globals.DEG_TO_RADS) * yaw;
+	            var pitch = Math.cos(this.camXAngle);
+	            xMovement += this.speed * Math.sin(this.camYAngle) * pitch;
+	            yMovement += this.speed * -Math.sin(this.camYAngle);
+	            var yaw = Math.cos(this.camXAngle);
+	            zMovement = this.speed * -Math.cos(this.camYAngle) * yaw;
 	        }
 	        if (this.moveBackward) {
-	            var pitch = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
-	            xMovement += this.speed * -Math.sin(this.camYAngle * Globals.DEG_TO_RADS) * pitch;
-	            yMovement += this.speed * Math.sin(this.camYAngle * Globals.DEG_TO_RADS);
-	            var yaw = Math.cos(this.camXAngle * Globals.DEG_TO_RADS);
-	            zMovement = this.speed * Math.cos(this.camYAngle * Globals.DEG_TO_RADS) * yaw;
+	            var pitch = Math.cos(this.camXAngle);
+	            xMovement += this.speed * -Math.sin(this.camYAngle) * pitch;
+	            yMovement += this.speed * Math.sin(this.camYAngle);
+	            var yaw = Math.cos(this.camXAngle);
+	            zMovement = this.speed * Math.cos(this.camYAngle) * yaw;
 	        }
 	        if (this.moveLeft) {
-	            var camYAngleRad = this.camYAngle * Globals.DEG_TO_RADS;
+	            var camYAngleRad = this.camYAngle;
 	            xMovement += -this.speed * Math.cos(camYAngleRad);
 	            zMovement += -this.speed * Math.sin(camYAngleRad);
 	        }
 	        if (this.moveRight) {
-	            var camYAngleRad = this.camYAngle * Globals.DEG_TO_RADS;
+	            var camYAngleRad = this.camYAngle;
 	            xMovement += this.speed * Math.cos(camYAngleRad);
 	            zMovement += this.speed * Math.sin(camYAngleRad);
 	        }
@@ -282,7 +279,9 @@
 	        this.camXPos += xMovement;
 	        this.camYPos += yMovement;
 	        this.camZPos += zMovement;
-	        this.camera.position.set(this.camXPos, this.camYPos, this.camZPos);
+	        this.camera.translateX(xMovement);
+	        this.camera.translateY(yMovement);
+	        this.camera.translateZ(zMovement);
 	        this.camera.updateMatrix();
 	    };
 	    InputHandler.prototype.update = function () {
@@ -323,11 +322,11 @@
 	        this.pointerLockChange = function (event) {
 	            if (document.pointerLockElement === document.body || document["mozPointerLockElement"] === document.body || document["webkitPointerLockElement"] === document.body) {
 	                _this.enablePointerLock();
-	                document.querySelector["#center-flex"].style.display = "none";
+	                document.getElementById("blocker").style.display = "none";
 	            }
 	            else {
 	                _this.disablePointerLock();
-	                document.querySelector["#center-flex"].style.display = "flex";
+	                document.getElementById("blocker").style.display = "flex";
 	            }
 	        };
 	        this.onMouseMove = function (event) {
@@ -345,15 +344,19 @@
 	        this._pitch = new THREE.Object3D();
 	        this._pitch.add(this.camera);
 	        this._yaw = new THREE.Object3D();
-	        this._yaw.position.y = 10;
+	        this._yaw.position.y = 2;
 	        this._yaw.add(this._pitch);
-	        this._pointerLockButton = document.querySelector("#pointerLockButton");
+	        this._pointerLockButton = document.getElementById("pointerLockButton");
 	        var havePointerLock = "pointerLockElement" in document ||
 	            "mozPointerLockElement" in document ||
 	            "webkitPointerLockElement" in document;
 	        if (havePointerLock) {
-	            var element_1 = document.body;
-	            this._pointerLockButton.addEventListener("click", function (event) { return element_1.requestPointerLock(); });
+	            var element = document.body;
+	            document.addEventListener('pointerlockchange', this.pointerLockChange, false);
+	            this._pointerLockButton.addEventListener("click", function (event) {
+	                _this._pointerLockButton.style.display = "none";
+	                document.body.requestPointerLock();
+	            });
 	        }
 	    }
 	    MouseHandler.prototype.destroy = function () {
@@ -368,6 +371,8 @@
 	        configurable: true
 	    });
 	    MouseHandler.prototype.enablePointerLock = function () {
+	        var element = document.body;
+	        element.requestPointerLock();
 	        document.addEventListener("mousemove", this.onMouseMove, false);
 	        this._pointerLock = true;
 	    };
@@ -391,7 +396,6 @@
 	    };
 	    MouseHandler.prototype.update = function () {
 	        if (this._pointerLock) {
-	            this.calcCameraMovement();
 	        }
 	    };
 	    return MouseHandler;
