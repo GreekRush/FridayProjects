@@ -1,0 +1,22 @@
+{
+  "name": "threets",
+  "version": "1.0.0",
+  "description": "Just for funzies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evan Carey",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^1.8.10",
+    "typescript-compiler": "^1.4.1"
+  },
+  "devDependencies": {
+    "css-loader": "^0.23.1",
+    "style-loader": "^0.13.1",
+    "ts-loader": "^0.8.2",
+    "typings": "^1.0.4",
+    "webpack": "^1.13.1"
+  }
+}

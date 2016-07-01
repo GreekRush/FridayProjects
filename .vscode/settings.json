@@ -4,5 +4,13 @@
         "**/.git": true,
         "**/.svn": true,
         "**/.DS_Store": true
+    },
+    "editor.insertSpaces": true,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "**/src/**/*.js": true,
+        "**/dist": true,
+        "**/lib": true
     }
 }
