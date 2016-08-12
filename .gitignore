@@ -1,7 +1,6 @@
-/2016-5-20/output.json
-**/node_modules
-/2016-06-17/config.js
-
-/2016-08-05/downloads/*
-/2016-08-05/screen-shots/*
-/2016-08-05/pdfs/*
+**/output.json
+**/node_modules/*
+**/config.js
+/scraper_mk_II/screen-shots/*
+/scraper_mk_II/pdfs/*
+/scraper_mk_II/downloads/*

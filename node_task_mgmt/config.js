@@ -1,0 +1,1 @@
+module.exports = "mongodb://agenda:techfridays@ds017514.mlab.com:17514/grfridays";
