@@ -6,10 +6,10 @@ just make sure it's interesting to you on some level. It doesn't need to be dire
 
 ## Projects
 
-* [Audio Visualizer](../audio_visualizer/README.md)
-* [Generative Art](../generative_art/README.md)
-* [Node Task Mgmt](../node_task_mgmt/README.md)
-* [Scraper Mk.I](../scraper_mk_I/README.md)
-* [Scraper Mk.II](../scraper_mk_II/README.md)
-* [Simulated Universe](../simulated_universe/README.md)
+* [Audio Visualizer](./audio_visualizer/README.md)
+* [Generative Art](./generative_art/README.md)
+* [Node Task Mgmt](./node_task_mgmt/README.md)
+* [Scraper Mk.I](./scraper_mk_I/README.md)
+* [Scraper Mk.II](./scraper_mk_II/README.md)
+* [Simulated Universe](./simulated_universe/README.md)
 * [Threets]()
